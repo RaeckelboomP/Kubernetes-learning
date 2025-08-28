@@ -32,6 +32,16 @@ spec:
               key: MONGO_INITDB_ROOT_PASSWORD
         - name: ME_CONFIG_MONGODB_SERVER
           value: mongodb-service
+        - name: ME_CONFIG_BASICAUTH_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: ME_CONFIG_BASICAUTH_USERNAME
+        - name: ME_CONFIG_BASICAUTH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: ME_CONFIG_BASICAUTH_PASSWORD
 ---
 apiVersion: v1
 kind: Service
