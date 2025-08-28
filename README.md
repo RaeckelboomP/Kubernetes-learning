@@ -46,6 +46,7 @@ We will not set a Persistent Volume (PV).
  - Reference values from the secret into the mongodb deployment
  - Apply the deployment
  - Create the mongodb service (internal, ClusterIP) in the same file as the deployment
+ - Create the ConfigMap (contain the mongodb server address) and apply it
  - Create the mongo-express deployment and apply it
  - Create the mongo-express LoadBalancer service in the same file and reapply it
  - Run ```minikube service mongo-express-service```
