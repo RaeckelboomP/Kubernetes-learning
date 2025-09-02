@@ -38,7 +38,7 @@ We will access the mongodb only through mongo-express, so it will be publicly re
 We will not set a Persistent Volume (PV).
 
 ### Steps
- - Launch Docker Desktop on Windows.
+ - Launch Docker Desktop on Windows
  - minikube start
  - Create the mongodb deployment
  - Create the secret
@@ -50,3 +50,28 @@ We will not set a Persistent Volume (PV).
  - Create the mongo-express deployment and apply it
  - Create the mongo-express LoadBalancer service in the same file and reapply it
  - Run ```minikube service mongo-express-service```
+
+ ## Second step - add a persistent volume
+
+ **Branch persistent-volume**
+
+ The goal is to learn how to add a persistent volume.
+
+ ### Steps
+  - Create a Persistent Volume (local for learning, in production I would use a StorageClass)
+  - Turn "Headless" the mongodb service (needed for StatefulSets to allow stable network identities)
+  - Replace the mongodb Deployment with a StatefulSet
+  - ```kubectl apply -f config-map.yaml```
+  - ```kubectl apply -f secret.yaml```
+  - ```kubectl apply -f persistent-volume.yaml```
+  - ```kubectl apply -f mongodb-stateful.yaml```
+  - ```kubectl apply -f mongo-express.yaml```
+  - ```kubectl get pods --watch```
+  - ```minikube service mongo-express-service```
+
+We don't need a PVC because the StatefulSet handle it with its volumeClaimTemplates.
+
+### Test the persistency
+ - Go on mongo-express to create a database
+ - ```kubectl delete pod mongodb-statefulset-0``` : k8s delete the pod and recreate it automatically.
+ - Once the pod is recreated and running, return to mongo-express and check that the created database is still present.
