@@ -4,6 +4,7 @@
         "ADMINUSERNAME",
         "BASICAUTH",
         "dvcm",
-        "INITDB"
+        "INITDB",
+        "statefulset"
     ]
 }
