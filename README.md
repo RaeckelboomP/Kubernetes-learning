@@ -75,3 +75,25 @@ We don't need a PVC because the StatefulSet handle it with its volumeClaimTempla
  - Go on mongo-express to create a database
  - ```kubectl delete pod mongodb-statefulset-0``` : k8s delete the pod and recreate it automatically.
  - Once the pod is recreated and running, return to mongo-express and check that the created database is still present.
+
+ ## Third step - scale the database
+
+ **Branch pv-multi-pods**
+
+ Currently the database has only one pod, for scalability we aim to find a way to replicate the database while keeping all replicas synchronized.
+
+ Many databases and stateful systems provide their own Kubernetes Operators to handle this task, in our case, we will use [**MongoDB Community Operator**](https://github.com/mongodb/mongodb-kubernetes).
+ 
+ ### Steps
+
+ - Install [**Helm**](https://helm.sh/docs/intro/install/)
+ - Install MongoDB Community Operator through Helm :
+```
+helm repo add mongodb https://mongodb.github.io/mongodb-kubernetes-operator
+helm repo update
+helm install community-operator mongodb/mongodb-kubernetes-operator
+```
+This will install the CRDs and deploy the operator in the cluster.
+
+ - ```kubectl get crds | grep mongodbcommunity``` : check the CRDs
+ - 
